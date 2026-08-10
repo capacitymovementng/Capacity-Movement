@@ -14,7 +14,7 @@ export default function PublicHomePage() {
           <img 
             src="/images/logo.png" 
             alt="Capacity Movement Logo" 
-            className="w-10 h-10 md:w-12 md:h-12 object-contain bg-white rounded-full border-2 border-[#AE955A] p-1"
+            className="w-10 h-10 md:w-12 md:h-12 object-contain bg-[#04681F] rounded-full border-2 border-[#AE955A] p-1 shadow-md"
           />
           <div className="leading-tight">
             <h1 className="font-extrabold tracking-widest text-lg md:text-xl uppercase">Capacity Movement</h1>
@@ -231,7 +231,7 @@ export default function PublicHomePage() {
              <img 
                src="/images/logo.png" 
                alt="Official Emblem of Capacity Movement" 
-               className="w-48 h-48 md:w-64 md:h-64 object-contain bg-white rounded-full shadow-2xl border-4 border-[#AE955A] p-4 md:p-6"
+               className="w-48 h-48 md:w-64 md:h-64 object-contain bg-[#04681F] rounded-full shadow-2xl border-4 border-[#AE955A] p-4 md:p-6"
              />
           </div>
           <div className="w-full md:w-2/3 text-center md:text-left">
