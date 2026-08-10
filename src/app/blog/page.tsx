@@ -1,0 +1,98 @@
+"use client";
+
+import Link from 'next/link';
+import { useState } from 'react';
+
+export default function BlogPage() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  return (
+    <main className="min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-[#AE955A] selection:text-white overflow-x-hidden">
+      {/* NAVIGATION BAR */}
+      <nav className="bg-[#04681F] text-white py-4 px-6 md:px-12 flex justify-between items-center shadow-lg sticky top-0 z-50">
+        <Link href="/" className="flex items-center gap-3">
+          <img 
+            src="/logo.png" 
+            alt="Capacity Movement Logo" 
+            className="w-10 h-10 md:w-12 md:h-12 object-contain bg-[#04681F] rounded-full border-2 border-[#AE955A] p-1 shadow-md"
+          />
+          <div className="leading-tight">
+            <h1 className="font-extrabold tracking-widest text-lg md:text-xl uppercase">Capacity Movement</h1>
+            <p className="text-[#AE955A] text-[9px] md:text-[10px] font-bold uppercase tracking-widest">Project 2027</p>
+          </div>
+        </Link>
+        
+        {/* Desktop Links */}
+        <div className="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest">
+          <Link href="/#leadership" className="hover:text-[#AE955A] transition-colors">Leadership</Link>
+          <Link href="/#values" className="hover:text-[#AE955A] transition-colors">Our Values</Link>
+          <Link href="/#programs" className="hover:text-[#AE955A] transition-colors">Initiatives</Link>
+          <Link href="/blog" className="text-[#AE955A] transition-colors">News</Link>
+        </div>
+
+        {/* Mobile Hamburger Icon */}
+        <button 
+          className="md:hidden text-white focus:outline-none"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+          </svg>
+        </button>
+      </nav>
+
+      {/* Mobile Dropdown Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-[#021807] text-white flex flex-col items-center py-4 space-y-4 text-xs font-bold uppercase tracking-widest sticky top-[72px] z-40 border-b-4 border-[#AE955A] shadow-xl">
+          <Link href="/#leadership" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">Leadership</Link>
+          <Link href="/#values" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">Our Values</Link>
+          <Link href="/#programs" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">Initiatives</Link>
+          <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-[#AE955A] w-full text-center py-2">News</Link>
+        </div>
+      )}
+
+      {/* HEADER SECTION */}
+      <section className="bg-[#021807] text-white py-16 md:py-24 px-6 text-center border-b-[6px] border-[#AE955A]">
+        <h1 className="text-3xl md:text-5xl font-extrabold uppercase tracking-tight mb-4 text-shadow-lg">
+          Official <span className="text-[#AE955A]">Newsroom</span>
+        </h1>
+        <p className="text-sm md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          Stay updated with the latest press releases, empowerment program announcements, and on-the-ground updates from the Capacity Movement.
+        </p>
+      </section>
+
+      {/* NEWS GRID (Placeholder for now) */}
+      <section className="py-16 md:py-24 px-6 max-w-7xl mx-auto min-h-[40vh] flex flex-col items-center justify-center">
+        
+        <div className="bg-white p-10 md:p-16 rounded-lg shadow-xl border-t-[6px] border-[#04681F] text-center w-full max-w-3xl">
+          <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-gray-200 text-[#04681F]">
+            <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+            </svg>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-bold text-[#021807] uppercase mb-4">No Articles Yet</h2>
+          <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
+            Our media team is currently preparing the first round of official announcements and grassroots updates. Please check back shortly.
+          </p>
+          <Link href="/" className="inline-block bg-[#04681F] hover:bg-[#058227] text-white font-bold py-3 px-8 uppercase tracking-widest text-xs rounded transition-all shadow-lg">
+            Return to Homepage
+          </Link>
+        </div>
+
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#021807] text-gray-400 py-10 md:py-12 px-6 text-center text-xs md:text-sm border-t-4 border-[#04681F]">
+        <h2 className="text-lg md:text-xl font-black uppercase text-white tracking-widest mb-1 md:mb-2">Capacity Movement</h2>
+        <p className="text-[#AE955A] font-bold tracking-widest uppercase text-[10px] md:text-xs mb-6 md:mb-8">Project 2027</p>
+        <p className="mb-2 italic">"...for Credible Leadership."</p>
+        <p>Headquartered in Kaduna Central, Nigeria.</p>
+        
+        <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-[#0a4017] flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 text-[10px] md:text-xs font-bold uppercase tracking-widest">
+          <Link href="/admin" className="hover:text-white transition-colors">Admin Portal Login</Link>
+          <Link href="/blog" className="text-[#AE955A] transition-colors">Newsroom</Link>
+        </div>
+      </footer>
+    </main>
+  );
+}
