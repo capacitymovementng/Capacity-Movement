@@ -108,7 +108,7 @@ export default function PublicHomePage() {
             </div>
           </div>
 
-          <div className="relative mt-8 md:mt-12">
+          <div className="relative mt-0">
             <img 
               src="/images/patron.jpg" 
               alt="Amb. Yerima Usman Shettima - Grand Patron" 
