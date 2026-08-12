@@ -51,6 +51,16 @@ export default function BlogPage() {
         </div>
       )}
 
+      {/* RETURN TO HOMEPAGE BAR */}
+      <div className="bg-[#04240c] text-center py-2.5 border-b border-[#0a4017] w-full relative z-30">
+        <Link href="/" className="inline-flex items-center justify-center gap-2 text-[10px] md:text-xs text-[#AE955A] hover:text-white font-bold uppercase tracking-widest transition-colors">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Return to Homepage
+        </Link>
+      </div>
+
       {/* HEADER SECTION */}
       <section className="bg-[#021807] text-white py-16 md:py-24 px-6 text-center border-b-[6px] border-[#AE955A]">
         <h1 className="text-3xl md:text-5xl font-extrabold uppercase tracking-tight mb-4 text-shadow-lg">
