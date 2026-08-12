@@ -192,17 +192,6 @@ export default function AdminDashboard() {
 
         {/* JOIN REQUESTS TAB */}
         {activeTab === 'MEMBERS' && (
-    const savedToken = localStorage.getItem('cm_token');
-    const savedName = localStorage.getItem('cm_name');
-    const savedRole = localStorage.getItem('cm_role');
-
-    if (savedToken) {
-      setToken(savedToken);
-      if (savedName) setAdminName(savedName);
-      if (savedRole) setAdminRole(savedRole);
-      fetchContent(savedToken);
-    }
-  }, []);
 
   // Auto-generate URL slug when title changes
   const handleTitleChange = (val: string) => {
