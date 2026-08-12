@@ -1,10 +1,30 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function BlogPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [posts, setPosts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${apiUrl}/api/posts`);
+        const data = await res.json();
+        if (data.success) {
+          setPosts(data.data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch posts:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-[#AE955A] selection:text-white overflow-x-hidden">
@@ -71,24 +91,64 @@ export default function BlogPage() {
         </p>
       </section>
 
-      {/* NEWS GRID (Placeholder for now) */}
-      <section className="py-16 md:py-24 px-6 max-w-7xl mx-auto min-h-[40vh] flex flex-col items-center justify-center">
-        
-        <div className="bg-white p-10 md:p-16 rounded-lg shadow-xl border-t-[6px] border-[#04681F] text-center w-full max-w-3xl">
-          <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-gray-200 text-[#04681F]">
-            <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-            </svg>
+      {/* NEWS GRID */}
+      <section className="py-16 md:py-24 px-6 max-w-7xl mx-auto min-h-[40vh]">
+        {isLoading ? (
+          <div className="flex justify-center items-center h-full text-gray-500 font-bold uppercase tracking-widest mt-12">
+            Loading News...
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-[#021807] uppercase mb-4">No Articles Yet</h2>
-          <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
-            Our media team is currently preparing the first round of official announcements and grassroots updates. Please check back shortly.
-          </p>
-          <Link href="/" className="inline-block bg-[#04681F] hover:bg-[#058227] text-white font-bold py-3 px-8 uppercase tracking-widest text-xs rounded transition-all shadow-lg">
-            Return to Homepage
-          </Link>
-        </div>
-
+        ) : posts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center">
+            <div className="bg-white p-10 md:p-16 rounded-lg shadow-xl border-t-[6px] border-[#04681F] text-center w-full max-w-3xl">
+              <div className="w-20 h-20 md:w-24 md:h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-gray-200 text-[#04681F]">
+                <svg className="w-10 h-10 md:w-12 md:h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-[#021807] uppercase mb-4">No Articles Yet</h2>
+              <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
+                Our media team is currently preparing the first round of official announcements and grassroots updates. Please check back shortly.
+              </p>
+              <Link href="/" className="inline-block bg-[#04681F] hover:bg-[#058227] text-white font-bold py-3 px-8 uppercase tracking-widest text-xs rounded transition-all shadow-lg">
+                Return to Homepage
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <div key={post.id} className="bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden flex flex-col hover:border-[#AE955A] transition-all">
+                {post.featuredImage ? (
+                  <div className="h-48 w-full bg-gray-200 relative">
+                    <img src={post.featuredImage} alt={post.title} className="absolute inset-0 w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="h-48 w-full bg-[#021807] relative flex items-center justify-center border-b-4 border-[#AE955A]">
+                    <img src="/images/logo.png" alt="Capacity Movement Logo" className="h-24 w-24 object-contain opacity-50" />
+                  </div>
+                )}
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-[10px] uppercase tracking-widest text-[#AE955A] font-bold">
+                      {post.category?.name || 'Update'}
+                    </span>
+                    <span className="text-[10px] text-gray-400 font-mono">
+                      {new Date(post.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-[#021807] text-lg leading-tight mb-3">{post.title}</h3>
+                  <div className="text-sm text-gray-600 mb-6 line-clamp-3 overflow-hidden">
+                    {post.content}
+                  </div>
+                  <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+                    <span className="text-[10px] uppercase font-bold text-gray-500">By {post.author?.name || 'Media Team'}</span>
+                    <button className="text-xs font-bold text-[#04681F] uppercase tracking-wider hover:text-[#AE955A] transition-colors">Read Full &rarr;</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* FOOTER */}
