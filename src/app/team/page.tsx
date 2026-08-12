@@ -6,8 +6,8 @@ import { useState } from 'react';
 const teamMembers = [
   { name: "Dr. Bashir Umar Mohammed", title: "State Chairman", img: "/images/sc.jpg" },
   { name: "Hon. Danjuma Paul (DON J.)", title: "National Director Finance", img: "/images/ndf.jpg" },
-  { name: "Hon. Bashir Zango", title: "Zone 1 Vice Chairman", img: "/images/svcz1.jpg" },
-  { name: "Comrade Abdulhakeem Adejumo", title: "Vice Chairman Zone 2", img: "/images/svcz2.jpg" },
+  { name: "Hon. Bashir Zango", title: "Zone 1 Vice Chairman", img: "/images/s1vc.jpg" },
+  { name: "Comrade Abdulhakeem Adejumo", title: "Vice Chairman Zone 2", img: "/images/vcz2.jpg" },
   { name: "Hon. Francis Joshua Abu", title: "State Vice Chairman Zone 3", img: "/images/svcz3.jpg" },
   { name: "Yabo Chris Ephraim", title: "State Secretary", img: "/images/sce.jpg" },
   { name: "Mallam Abubakar Usman Tangaza", title: "State Assistant Secretary", img: "/images/sas.jpg" },

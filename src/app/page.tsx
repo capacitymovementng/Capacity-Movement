@@ -1,10 +1,55 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function PublicHomePage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [latestNews, setLatestNews] = useState<any[]>([]);
+  const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
+
+  // Fetch the latest news from your database
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${apiUrl}/api/posts`);
+        const data = await res.json();
+        
+        if (data.success && data.data.length > 0) {
+          setLatestNews(data.data);
+        } else {
+           // Fallback default news if nothing has been published yet
+           setLatestNews([{
+             id: 'default',
+             title: 'Capacity Movement demands direct, transparent primaries in Kaduna Central.',
+             slug: '/blog',
+             featuredImage: '/images/hero-banner.jpg',
+             category: { name: 'Official Statement' }
+           }]);
+        }
+      } catch (err) {
+        // Fallback default news if the database is asleep
+        setLatestNews([{
+          id: 'default',
+          title: 'Capacity Movement demands direct, transparent primaries in Kaduna Central.',
+          slug: '/blog',
+          featuredImage: '/images/hero-banner.jpg',
+          category: { name: 'Official Statement' }
+        }]);
+      }
+    };
+    fetchNews();
+  }, []);
+
+  // Cycle through the news every 30 seconds
+  useEffect(() => {
+    if (latestNews.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentNewsIndex((prev) => (prev + 1) % latestNews.length);
+    }, 30000); 
+    return () => clearInterval(interval);
+  }, [latestNews.length]);
 
   return (
     <main className="min-h-screen bg-white text-gray-900 font-sans selection:bg-[#AE955A] selection:text-white overflow-x-hidden">
@@ -60,6 +105,35 @@ export default function PublicHomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#021807]/80 to-[#021807]"></div>
         
         <div className="max-w-4xl mx-auto relative z-10">
+          
+          {/* Subtle News Ticker */}
+          {latestNews.length > 0 && (
+            <Link 
+              href={latestNews[currentNewsIndex].slug === '/blog' ? '/blog' : `/blog`} 
+              className="inline-flex items-center gap-3 bg-black/40 hover:bg-black/60 border border-[#AE955A]/50 rounded-full p-1.5 pr-4 mb-6 md:mb-8 transition-all backdrop-blur-sm max-w-[90%] md:max-w-xl mx-auto text-left group shadow-lg"
+            >
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden shrink-0 border border-[#04681F]">
+                <img 
+                  src={latestNews[currentNewsIndex].featuredImage || '/images/logo.png'} 
+                  alt="News Snippet" 
+                  className="w-full h-full object-cover" 
+                  onError={(e) => e.currentTarget.src = '/images/logo.png'} 
+                />
+              </div>
+              <div className="flex flex-col truncate overflow-hidden">
+                <span className="text-[8px] md:text-[10px] text-[#AE955A] font-bold uppercase tracking-widest leading-none mb-0.5 md:mb-1">
+                  {latestNews[currentNewsIndex].category?.name || 'Latest Update'}
+                </span>
+                <span className="text-[11px] md:text-sm text-gray-200 font-medium truncate group-hover:text-white transition-colors">
+                  {latestNews[currentNewsIndex].title}
+                </span>
+              </div>
+              <div className="shrink-0 text-[#AE955A] ml-1 group-hover:translate-x-1 transition-transform">
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </div>
+            </Link>
+          )}
+
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold uppercase tracking-tight mb-4 md:mb-6 leading-tight text-shadow-lg">
             Building a Capable Nation, <br/>
             <span className="text-[#AE955A]">One Citizen at a Time.</span>
