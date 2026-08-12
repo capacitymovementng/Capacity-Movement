@@ -142,7 +142,9 @@ export default function BlogPage() {
                   </div>
                   <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
                     <span className="text-[10px] uppercase font-bold text-gray-500">By {post.author?.name || 'Media Team'}</span>
-                    <button className="text-xs font-bold text-[#04681F] uppercase tracking-wider hover:text-[#AE955A] transition-colors">Read Full &rarr;</button>
+                    <Link href={`/blog/${post.slug}`} className="text-xs font-bold text-[#04681F] uppercase tracking-wider hover:text-[#AE955A] transition-colors">
+                      Read Full &rarr;
+                    </Link>
                   </div>
                 </div>
               </div>
