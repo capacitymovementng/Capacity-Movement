@@ -190,10 +190,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* JOIN REQUESTS TAB */}
-        {activeTab === 'MEMBERS' && (
-
-  // Auto-generate URL slug when title changes
+        // Auto-generate URL slug when title changes
   const handleTitleChange = (val: string) => {
     setTitle(val);
     if (!editingPostId) {
