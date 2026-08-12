@@ -98,6 +98,7 @@ export default function TeamPage() {
                   src={member.img} 
                   alt={member.name} 
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 z-10"
+                  onError={(e) => e.currentTarget.style.display = 'none'} 
                 />
               </div>
               <div className="p-4 md:p-6 text-center border-t-4 border-[#04681F]">
