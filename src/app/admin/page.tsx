@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function AdminDashboard() {
@@ -32,6 +33,7 @@ export default function AdminDashboard() {
   const [slug, setSlug] = useState('');
   const [content, setContent] = useState('');
   const [featuredImage, setFeaturedImage] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [categoryId, setCategoryId] = useState('');
   const [isPublished, setIsPublished] = useState(false);
 
@@ -331,13 +333,17 @@ export default function AdminDashboard() {
             </button>
           </form>
 
-          <div className="mt-6 text-center border-t border-[#0a4017] pt-5">
+          <div className="mt-6 text-center border-t border-[#0a4017] pt-5 flex flex-col gap-4">
             <button
               onClick={() => setIsSetupMode(!isSetupMode)}
               className="text-xs text-gray-400 hover:text-[#AE955A] tracking-wider transition-colors"
             >
               {isSetupMode ? '← Back to Login' : 'First time deployment? Setup Master Admin'}
             </button>
+            <Link href="/" className="inline-flex items-center justify-center gap-2 text-[10px] text-[#AE955A] hover:text-white font-bold uppercase tracking-widest transition-colors">
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+              Return to Homepage
+            </Link>
           </div>
         </div>
       </main>
@@ -362,7 +368,14 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      {/* HEADER BAR */}
+      {/* RETURN TO HOME & HEADER BAR */}
+      <div className="max-w-7xl mx-auto mb-4">
+        <Link href="/" className="inline-flex items-center justify-center gap-2 text-[10px] md:text-xs text-[#AE955A] hover:text-white font-bold uppercase tracking-widest transition-colors">
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+          Return to Homepage
+        </Link>
+      </div>
+      
       <header className="mb-8 flex justify-between items-center border-b border-[#0a4017] pb-6 max-w-7xl mx-auto">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white">Capacity Movement Newsroom</h1>
