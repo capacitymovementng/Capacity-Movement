@@ -578,14 +578,19 @@ export default function AdminDashboard() {
                     onChange={(e) => setNewUserPassword(e.target.value)}
                     className="bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-sm outline-none rounded-lg focus:border-[#AE955A]"
                   />
-                  <select
-                    value={newUserRole}
-                    onChange={(e) => setNewUserRole(e.target.value)}
-                    className="bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-sm outline-none rounded-lg focus:border-[#AE955A]"
-                  >
-                    <option value="EDITOR">EDITOR (Can post articles only)</option>
-                    <option value="MASTER_ADMIN">MASTER ADMIN (Full control)</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={newUserRole}
+                      onChange={(e) => setNewUserRole(e.target.value)}
+                      className="w-full appearance-none bg-[#021807] border border-[#0a4017] px-4 py-3 pr-10 text-white text-sm outline-none rounded-lg focus:border-[#AE955A]"
+                    >
+                      <option value="EDITOR">EDITOR (Can post articles only)</option>
+                      <option value="MASTER_ADMIN">MASTER ADMIN (Full control)</option>
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#AE955A]">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                  </div>
                 </div>
                 <button
                   type="submit"
@@ -742,18 +747,23 @@ export default function AdminDashboard() {
                   <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
                     Category
                   </label>
-                  <select
-                    value={categoryId}
-                    onChange={(e) => setCategoryId(e.target.value)}
-                    className="w-full bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-sm focus:border-[#AE955A] outline-none rounded-lg"
-                  >
-                    <option value="">-- Select Category (Optional) --</option>
-                    {categories.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={categoryId}
+                      onChange={(e) => setCategoryId(e.target.value)}
+                      className="w-full appearance-none bg-[#021807] border border-[#0a4017] px-4 py-3 pr-10 text-white text-sm focus:border-[#AE955A] outline-none rounded-lg cursor-pointer"
+                    >
+                      <option value="">-- Select Category (Optional) --</option>
+                      {categories.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[#AE955A]">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                  </div>
                 </div>
               </div>
 
