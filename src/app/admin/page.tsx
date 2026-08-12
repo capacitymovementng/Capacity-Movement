@@ -8,7 +8,10 @@ export default function AdminDashboard() {
   const [adminRole, setAdminRole] = useState<string>('EDITOR');
 
   // Navigation & View State
-  const [activeTab, setActiveTab] = useState<'POSTS' | 'CREATE_POST' | 'CATEGORIES'>('POSTS');
+  const [activeTab, setActiveTab] = useState<'POSTS' | 'CREATE_POST' | 'CATEGORIES' | 'MEMBERS'>('POSTS');
+
+  // Member Data State
+  const [members, setMembers] = useState<any[]>([]);
 
   // Login & Setup State
   const [email, setEmail] = useState('');
@@ -53,19 +56,40 @@ export default function AdminDashboard() {
     if (!activeToken) return;
     setIsLoading(true);
     try {
-      const [postRes, catRes] = await Promise.all([
+      const [postRes, catRes, memberRes] = await Promise.all([
         fetch(`${getApiUrl()}/api/posts?adminView=true`, { headers: getHeaders(activeToken) }),
-        fetch(`${getApiUrl()}/api/categories`)
+        fetch(`${getApiUrl()}/api/categories`),
+        fetch(`${getApiUrl()}/api/members`, { headers: getHeaders(activeToken) }).catch(() => ({ json: () => ({ success: false }) }))
       ]);
 
-      const [postData, catData] = await Promise.all([postRes.json(), catRes.json()]);
+      const [postData, catData, memberData] = await Promise.all([postRes.json(), catRes.json(), memberRes.json()]);
 
       if (postData.success) setPosts(postData.data);
       if (catData.success) setCategories(catData.data);
+      if (memberData && memberData.success) setMembers(memberData.data);
     } catch (err) {
       console.error('Error fetching CMS content:', err);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleToggleContacted = async (id: string, currentStatus: boolean) => {
+    try {
+      const res = await fetch(`${getApiUrl()}/api/members/${id}`, {
+        method: 'PUT',
+        headers: getHeaders(),
+        body: JSON.stringify({ contacted: !currentStatus })
+      });
+      const data = await res.json();
+      if (data.success) {
+        triggerStatus('success', 'Member contact status updated.');
+        fetchContent();
+      } else {
+        triggerStatus('error', data.error);
+      }
+    } catch (err) {
+      triggerStatus('error', 'Network error.');
     }
   };
 
@@ -327,7 +351,7 @@ export default function AdminDashboard() {
       {/* MAIN CONTAINER */}
       <div className="max-w-7xl mx-auto">
         {/* NAVIGATION TABS */}
-        <div className="flex gap-4 border-b border-[#0a4017] mb-8 pb-3">
+        <div className="flex flex-wrap gap-4 border-b border-[#0a4017] mb-8 pb-3">
           <button
             onClick={() => { resetPostForm(); setActiveTab('POSTS'); }}
             className={`px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
@@ -345,12 +369,75 @@ export default function AdminDashboard() {
             {editingPostId ? '✏️ Edit Article' : '+ Write New Article'}
           </button>
           <button
+            onClick={() => setActiveTab('MEMBERS')}
+            className={`px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
+              activeTab === 'MEMBERS' ? 'bg-[#04681F] text-white shadow-md' : 'text-gray-400 hover:text-white'
+            }`}
+          >
+            Members List ({members.length})
+          </button>
+          <button
             onClick={() => setIsCategoryModalOpen(true)}
             className="ml-auto px-4 py-2.5 text-xs font-bold uppercase tracking-wider border border-[#AE955A] text-[#AE955A] hover:bg-[#AE955A] hover:text-black rounded-lg transition-all"
           >
             + Add Category
           </button>
         </div>
+
+        {/* MEMBERS TAB */}
+        {activeTab === 'MEMBERS' && (
+          <div className="bg-[#04240c] border border-[#0a4017] rounded-xl p-6 shadow-xl">
+            <h2 className="text-lg font-bold uppercase tracking-wide mb-6 text-white flex items-center">
+              <span className="w-2 h-5 bg-[#04681F] mr-3 rounded-full"></span>
+              Movement Members
+            </h2>
+
+            {members.length === 0 ? (
+              <div className="text-center py-12 text-gray-500 font-medium">
+                No members have joined yet (or waiting for database connection).
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm text-gray-300">
+                  <thead className="bg-[#021807] text-xs uppercase text-gray-400">
+                    <tr>
+                      <th className="px-4 py-3 rounded-tl-lg">Name</th>
+                      <th className="px-4 py-3">Contact Details</th>
+                      <th className="px-4 py-3">Joined Date</th>
+                      <th className="px-4 py-3 text-center rounded-tr-lg">Contacted?</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {members.map((member) => (
+                      <tr key={member.id} className="border-b border-[#0a4017] hover:bg-[#021807]/50 transition-colors">
+                        <td className="px-4 py-4 font-bold text-white">{member.name}</td>
+                        <td className="px-4 py-4">
+                          <p className="text-[#AE955A] font-mono">{member.phone}</p>
+                          <p className="text-xs text-gray-500">{member.email}</p>
+                        </td>
+                        <td className="px-4 py-4 text-xs font-mono text-gray-400">
+                          {new Date(member.createdAt).toLocaleDateString()}
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          <button
+                            onClick={() => handleToggleContacted(member.id, member.contacted)}
+                            className={`px-3 py-1.5 rounded text-xs font-bold uppercase tracking-wider transition-colors shadow-lg ${
+                              member.contacted 
+                                ? 'bg-[#04681F] text-white' 
+                                : 'bg-red-950/60 text-red-400 border border-red-800'
+                            }`}
+                          >
+                            {member.contacted ? '✔ Yes' : '✖ No'}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* TAB 1: POSTS LIST */}
         {activeTab === 'POSTS' && (

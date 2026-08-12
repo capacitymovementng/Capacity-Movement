@@ -27,6 +27,7 @@ export default function PublicHomePage() {
           <Link href="#leadership" className="hover:text-[#AE955A] transition-colors">Leadership</Link>
           <Link href="#values" className="hover:text-[#AE955A] transition-colors">Our Values</Link>
           <Link href="#programs" className="hover:text-[#AE955A] transition-colors">Initiatives</Link>
+          <Link href="/team" className="hover:text-[#AE955A] transition-colors">Our Team</Link>
           <Link href="/blog" className="hover:text-[#AE955A] transition-colors">News</Link>
         </div>
 
@@ -47,6 +48,7 @@ export default function PublicHomePage() {
           <Link href="#leadership" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">Leadership</Link>
           <Link href="#values" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">Our Values</Link>
           <Link href="#programs" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">Initiatives</Link>
+          <Link href="/team" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">Our Team</Link>
           <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#AE955A] w-full text-center py-2">News</Link>
         </div>
       )}
@@ -66,10 +68,10 @@ export default function PublicHomePage() {
             We are not just a political group; we are a people's movement. We exist to awaken the promise of Nigeria by building the capacity of every citizen to lead, serve, and succeed.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="bg-[#04681F] hover:bg-[#058227] text-white font-bold py-3 md:py-4 px-6 md:px-10 uppercase tracking-widest text-xs md:text-sm rounded transition-all shadow-lg shadow-[#04681F]/30">
+            <Link href="/join" className="bg-[#04681F] hover:bg-[#058227] text-white font-bold py-3 md:py-4 px-6 md:px-10 uppercase tracking-widest text-xs md:text-sm rounded transition-all shadow-lg shadow-[#04681F]/30 text-center">
               Join the Movement
-            </button>
-            <Link href="/blog" className="bg-transparent border-2 border-[#AE955A] text-[#AE955A] hover:bg-[#AE955A] hover:text-[#021807] font-bold py-3 md:py-4 px-6 md:px-10 uppercase tracking-widest text-xs md:text-sm rounded transition-all">
+            </Link>
+            <Link href="/blog" className="bg-transparent border-2 border-[#AE955A] text-[#AE955A] hover:bg-[#AE955A] hover:text-[#021807] font-bold py-3 md:py-4 px-6 md:px-10 uppercase tracking-widest text-xs md:text-sm rounded transition-all text-center">
               Read Our Latest News
             </Link>
           </div>
@@ -79,31 +81,58 @@ export default function PublicHomePage() {
       {/* LEADERSHIP & CONTEXT SECTION */}
       <section id="leadership" className="py-16 md:py-20 px-4 md:px-6 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
         <div>
-          <h3 className="text-[#AE955A] font-bold uppercase tracking-widest text-xs md:text-sm mb-2">Our Stance & Leadership</h3>
+          <h3 className="text-[#AE955A] font-bold uppercase tracking-widest text-[10px] md:text-xs mb-2">
+            🔥 Our Stance. Our Leadership. Our Voice.
+          </h3>
           <h2 className="text-2xl md:text-4xl font-extrabold uppercase text-[#021807] mb-4 md:mb-6 leading-tight">
-            Defending Democratic <br/> Transparency
+            🛡️ Defending Democracy. <br/>
+            <span className="text-[#04681F] text-xl md:text-3xl">Demanding Transparency.</span>
           </h2>
-          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4 md:mb-6">
-            Led by our President, <strong className="text-[#04681F]">Shehu Sani Sado</strong>, the Capacity Movement stands firmly against political imposition in Kaduna Central. 
-          </p>
-          <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4 md:mb-6">
-            In May 2026, our movement made national headlines by demanding direct, transparent primaries. We are proudly guided by our Grand Patron, <strong className="text-[#04681F]">Ambassador Yerima Usman Shettima</strong> (President, Arewa Consultative Youth Movement - ACYM), proving that politics belongs to the people.
-          </p>
-          <div className="border-l-4 border-[#04681F] pl-4 py-2 italic text-xs md:text-sm text-gray-600">
-            "True transformation begins not with policies alone, but with people who believe in their potential and have the capacity to make change happen."
+          
+          <div className="space-y-4 text-sm md:text-base text-gray-700 leading-relaxed mb-6">
+            <p>
+              Under the bold and principled leadership of our national President, <strong className="text-[#04681F]">Hon. Shehu Sani Sado</strong>, the Capacity Movement (CMP) stands firmly and unapologetically for people-driven democracy, internal party democracy, transparency, and fairness.
+            </p>
+            <p>
+              We reject political imposition and every attempt to silence the voice of the people. Leadership must emerge through the free will, participation, and confidence of the people—not through imposition.
+            </p>
+            <p>
+              In May 2026, the Capacity Movement made its position unmistakably clear by calling for direct, transparent, credible, and democratic primaries. Our voice was heard beyond Kaduna, reflecting a growing demand for a political system where the people—not a few individuals—decide their leaders.
+            </p>
+            <p>
+              Our movement draws strength and direction from our Chairman, Board of Trustees (CMP), <strong className="text-[#04681F]">Ambassador Yerima Usman Shettima</strong>, President of the Arewa Consultative Youth Movement (ACYM)—a leader whose commitment to youth participation, democratic values, and people-centred leadership continues to inspire us.
+            </p>
+          </div>
+
+          <div className="border-l-4 border-[#04681F] pl-4 py-3 bg-gray-50 rounded-r-lg mb-6 shadow-sm">
+            <h4 className="font-black text-[#021807] uppercase text-sm mb-2">✊ Our Principle is Simple:</h4>
+            <ul className="text-xs md:text-sm text-gray-700 font-bold uppercase tracking-wide space-y-1 mb-3">
+              <li>• No imposition.</li>
+              <li>• No manipulation.</li>
+              <li>• No politics of exclusion.</li>
+              <li className="text-[#04681F]">• The people must decide.</li>
+            </ul>
+            <p className="text-xs md:text-sm text-gray-600 italic">
+              "We believe politics is not the private property of individuals. Politics belongs to the people."
+            </p>
+          </div>
+
+          <div className="font-bold text-[10px] md:text-xs text-[#AE955A] uppercase tracking-wider leading-relaxed">
+            🔥 Capacity Movement — The People’s Voice, The People’s Power, The People’s Mandate.<br/>
+            <span className="text-[#04681F]">Democracy. Transparency. Participation. Accountability.</span>
           </div>
         </div>
         
         {/* Side-by-side grid forced on all screen sizes */}
-        <div className="grid grid-cols-2 gap-3 md:gap-6 pt-4">
+        <div className="grid grid-cols-2 gap-3 md:gap-6 pt-4 h-fit">
           <div className="relative mt-0">
             <img 
               src="/images/president.jpg" 
-              alt="Shehu Sani Sado - President" 
+              alt="Hon. Shehu Sani Sado - President" 
               className="aspect-[4/5] w-full object-cover rounded-lg shadow-2xl border border-gray-300"
             />
             <div className="absolute -bottom-4 -left-2 md:-bottom-6 md:-left-4 bg-[#04681F] text-white p-2 md:p-4 rounded-lg shadow-xl border-b-2 md:border-b-4 border-[#AE955A] w-[105%] md:w-11/12 z-10">
-              <p className="font-bold uppercase text-[10px] md:text-sm leading-tight">Shehu Sani Sado</p>
+              <p className="font-bold uppercase text-[10px] md:text-sm leading-tight">Hon. Shehu Sani Sado</p>
               <p className="text-[8px] md:text-[10px] tracking-widest uppercase text-gray-200 mt-1">President</p>
             </div>
           </div>
@@ -111,12 +140,12 @@ export default function PublicHomePage() {
           <div className="relative mt-0">
             <img 
               src="/images/patron.jpg" 
-              alt="Amb. Yerima Usman Shettima - Grand Patron" 
+              alt="Amb. Yerima Usman Shettima - Chairman BoT" 
               className="aspect-[4/5] w-full object-cover rounded-lg shadow-2xl border border-gray-300"
             />
             <div className="absolute -bottom-4 -left-2 md:-bottom-6 md:-left-4 bg-[#AE955A] text-[#021807] p-2 md:p-4 rounded-lg shadow-xl border-b-2 md:border-b-4 border-[#04681F] w-[105%] md:w-11/12 z-10">
-              <p className="font-bold uppercase text-[10px] md:text-sm leading-tight">Amb. Yerima Shettima</p>
-              <p className="text-[8px] md:text-[10px] font-bold tracking-widest uppercase text-[#021807]/80 mt-1">Grand Patron</p>
+              <p className="font-bold uppercase text-[9px] md:text-sm leading-tight">Amb. Yerima Shettima</p>
+              <p className="text-[7.5px] md:text-[9px] font-bold tracking-widest uppercase text-[#021807]/80 mt-1">Chairman, BoT</p>
             </div>
           </div>
         </div>
@@ -262,11 +291,17 @@ export default function PublicHomePage() {
       <footer className="bg-[#021807] text-gray-400 py-10 md:py-12 px-6 text-center text-xs md:text-sm border-t-4 border-[#04681F]">
         <h2 className="text-lg md:text-xl font-black uppercase text-white tracking-widest mb-1 md:mb-2">Capacity Movement</h2>
         <p className="text-[#AE955A] font-bold tracking-widest uppercase text-[10px] md:text-xs mb-6 md:mb-8">Project 2027</p>
-        <p className="mb-2 italic">"...for Credible Leadership."</p>
-        <p>Headquartered in Kaduna Central, Nigeria.</p>
+        
+        <div className="max-w-md mx-auto space-y-2 mb-8 text-gray-300">
+          <p className="mb-2 italic text-gray-400">"...for Credible Leadership."</p>
+          <p>5th Floor, Bank of Industry Building (BOI)</p>
+          <p>Muhammadu Buhari Way, Kaduna.</p>
+          <p className="text-[#AE955A]">capacitymovementprojectkad27@gmail.com</p>
+        </div>
         
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-[#0a4017] flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 text-[10px] md:text-xs font-bold uppercase tracking-widest">
           <Link href="/admin" className="hover:text-white transition-colors">Admin Portal Login</Link>
+          <Link href="/team" className="hover:text-[#AE955A] transition-colors">Our Team</Link>
           <Link href="/blog" className="hover:text-[#AE955A] transition-colors">Newsroom</Link>
         </div>
       </footer>
