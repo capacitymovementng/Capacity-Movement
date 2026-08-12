@@ -190,19 +190,108 @@ export default function AdminDashboard() {
           </div>
         )}
 
+        {/* TEAM ACCOUNTS TAB */}
+        {activeTab === 'USERS' && adminRole === 'MASTER_ADMIN' && (
+          <div className="space-y-8">
+            {/* CREATE USER FORM */}
+            <div className="bg-[#04240c] border border-[#0a4017] rounded-xl p-6 shadow-xl max-w-2xl">
+              <h2 className="text-lg font-bold uppercase tracking-wide mb-4 text-white flex items-center">
+                <span className="w-2 h-5 bg-[#AE955A] mr-3 rounded-full"></span>
+                Add New Team Account
+              </h2>
+              <form onSubmit={handleCreateUser} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    required
+                    placeholder="Full Name (e.g. Media Team 1)"
+                    value={newUserName}
+                    onChange={(e) => setNewUserName(e.target.value)}
+                    className="bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-sm outline-none rounded-lg focus:border-[#AE955A]"
+                  />
+                  <input
+                    type="email"
+                    required
+                    placeholder="Email Address"
+                    value={newUserEmail}
+                    onChange={(e) => setNewUserEmail(e.target.value)}
+                    className="bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-sm outline-none rounded-lg focus:border-[#AE955A]"
+                  />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input
+                    type="password"
+                    required
+                    placeholder="Password"
+                    value={newUserPassword}
+                    onChange={(e) => setNewUserPassword(e.target.value)}
+                    className="bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-sm outline-none rounded-lg focus:border-[#AE955A]"
+                  />
+                  <select
+                    value={newUserRole}
+                    onChange={(e) => setNewUserRole(e.target.value)}
+                    className="bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-sm outline-none rounded-lg focus:border-[#AE955A]"
+                  >
+                    <option value="EDITOR">EDITOR (Can post articles only)</option>
+                    <option value="MASTER_ADMIN">MASTER ADMIN (Full control)</option>
+                  </select>
+                </div>
+                <button
+                  type="submit"
+                  className="bg-[#04681F] hover:bg-[#058227] text-white font-bold py-3 px-6 uppercase text-xs tracking-wider rounded-lg transition-all"
+                >
+                  Create Account
+                </button>
+              </form>
+            </div>
+
+            {/* USERS LIST TABLE */}
+            <div className="bg-[#04240c] border border-[#0a4017] rounded-xl p-6 shadow-xl">
+              <h2 className="text-lg font-bold uppercase tracking-wide mb-6 text-white flex items-center">
+                <span className="w-2 h-5 bg-[#04681F] mr-3 rounded-full"></span>
+                Active Admin Accounts
+              </h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm text-gray-300">
+                  <thead className="bg-[#021807] text-xs uppercase text-gray-400">
+                    <tr>
+                      <th className="px-4 py-3 rounded-tl-lg">Name</th>
+                      <th className="px-4 py-3">Email</th>
+                      <th className="px-4 py-3">Role</th>
+                      <th className="px-4 py-3 text-center rounded-tr-lg">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {teamUsers.map((user) => (
+                      <tr key={user.id} className="border-b border-[#0a4017] hover:bg-[#021807]/50 transition-colors">
+                        <td className="px-4 py-4 font-bold text-white">{user.name}</td>
+                        <td className="px-4 py-4 font-mono text-xs text-[#AE955A]">{user.email}</td>
+                        <td className="px-4 py-4">
+                          <span className={`px-2 py-0.5 text-[10px] font-bold uppercase rounded ${
+                            user.role === 'MASTER_ADMIN' ? 'bg-amber-950 text-amber-400 border border-amber-800' : 'bg-blue-950 text-blue-400 border border-blue-800'
+                          }`}>
+                            {user.role}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          <button
+                            onClick={() => handleDeleteUser(user.id)}
+                            className="bg-red-950/60 hover:bg-red-900 text-red-300 text-xs font-bold uppercase px-3 py-1.5 rounded transition-all border border-red-800/40"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* JOIN REQUESTS TAB */}
         {activeTab === 'MEMBERS' && (
-    const savedToken = localStorage.getItem('cm_token');
-    const savedName = localStorage.getItem('cm_name');
-    const savedRole = localStorage.getItem('cm_role');
-
-    if (savedToken) {
-      setToken(savedToken);
-      if (savedName) setAdminName(savedName);
-      if (savedRole) setAdminRole(savedRole);
-      fetchContent(savedToken);
-    }
-  }, []);
 
   // Auto-generate URL slug when title changes
   const handleTitleChange = (val: string) => {
