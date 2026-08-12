@@ -163,12 +163,42 @@ export default function AdminDashboard() {
     setSlug('');
     setContent('');
     setFeaturedImage('');
+    setImageFile(null);
     setCategoryId('');
     setIsPublished(false);
   };
 
   const handleSavePost = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    let finalImageUrl = featuredImage;
+
+    // If the admin selected a new image file, upload it to Cloudinary first
+    if (imageFile) {
+      triggerStatus('success', 'Uploading image...');
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      
+      try {
+        const uploadRes = await fetch(`${getApiUrl()}/api/upload`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }, // No Content-Type, browser handles the form boundary
+          body: formData
+        });
+        const uploadData = await uploadRes.json();
+        
+        if (uploadData.success) {
+          finalImageUrl = uploadData.url;
+        } else {
+          triggerStatus('error', 'Image upload failed.');
+          return; // Stop saving the article if image upload fails
+        }
+      } catch (err) {
+        triggerStatus('error', 'Network error during image upload.');
+        return;
+      }
+    }
+
     const endpoint = editingPostId ? `/api/posts/${editingPostId}` : '/api/posts';
     const method = editingPostId ? 'PUT' : 'POST';
 
@@ -180,7 +210,7 @@ export default function AdminDashboard() {
           title,
           slug,
           content,
-          featuredImage: featuredImage || null,
+          featuredImage: finalImageUrl || null,
           categoryId: categoryId || null,
           isPublished
         })
@@ -557,15 +587,23 @@ export default function AdminDashboard() {
 
               <div>
                 <label className="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">
-                  Featured Image File Name / URL
+                  Featured Image Cover
                 </label>
-                <input
-                  type="text"
-                  placeholder="e.g. /images/hero-banner.jpg"
-                  value={featuredImage}
-                  onChange={(e) => setFeaturedImage(e.target.value)}
-                  className="w-full bg-[#021807] border border-[#0a4017] px-4 py-3 text-white font-mono text-xs focus:border-[#AE955A] outline-none rounded-lg"
-                />
+                <div className="flex flex-col gap-3">
+                  {featuredImage && !imageFile && (
+                    <div className="text-xs text-green-400">Current Image: Attached</div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setImageFile(e.target.files[0]);
+                      }
+                    }}
+                    className="w-full bg-[#021807] border border-[#0a4017] px-4 py-3 text-white text-xs focus:border-[#AE955A] outline-none rounded-lg file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-bold file:bg-[#04681F] file:text-white hover:file:bg-[#058227] cursor-pointer"
+                  />
+                </div>
               </div>
 
               <div>
