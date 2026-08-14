@@ -14,6 +14,7 @@ export default function AdminDashboard() {
   // Member & User Data State
   const [members, setMembers] = useState<any[]>([]);
   const [teamUsers, setTeamUsers] = useState<any[]>([]);
+  const [memberSearch, setMemberSearch] = useState('');
   
   // User Creation State
   const [newUserEmail, setNewUserEmail] = useState('');
@@ -155,6 +156,71 @@ export default function AdminDashboard() {
     } catch (err) {
       triggerStatus('error', 'Network error while updating member status.');
     }
+  };
+
+  const handleDownloadBackup = async () => {
+    triggerStatus('success', 'Preparing database backup... Please wait.');
+    try {
+      const res = await fetch(`${getApiUrl()}/api/admin/backup`, {
+        method: 'GET',
+        headers: getHeaders()
+      });
+      
+      if (!res.ok) throw new Error('Backup failed');
+      
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `capacity-movement-backup-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      triggerStatus('success', 'Database backup downloaded successfully!');
+    } catch (err) {
+      triggerStatus('error', 'Failed to download database backup.');
+    }
+  };
+
+  const handleExportCSV = (dataToExport: any[]) => {
+    if (dataToExport.length === 0) {
+      triggerStatus('error', 'No data to export.');
+      return;
+    }
+    
+    // Setup the headers for Excel/CSV
+    const headers = ['Name', 'Email', 'Phone', 'State', 'LGA', 'Contacted', 'Joined Date'];
+    const csvRows = [headers.join(',')];
+    
+    // Map over the filtered data and create rows
+    dataToExport.forEach(row => {
+      const values = [
+        `"${row.name || ''}"`,
+        `"${row.email || ''}"`,
+        `"${row.phone || ''}"`,
+        `"${row.state || ''}"`,
+        `"${row.lga || ''}"`,
+        row.contacted ? 'Yes' : 'No',
+        `"${new Date(row.createdAt).toLocaleDateString()}"`
+      ];
+      csvRows.push(values.join(','));
+    });
+    
+    // Create the file in the browser and force download
+    const csvString = csvRows.join('\n');
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `capacity-members-filtered-${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    
+    triggerStatus('success', 'CSV exported successfully!');
   };
 
   // Auto-generate URL slug when title changes
@@ -466,7 +532,7 @@ export default function AdminDashboard() {
               activeTab === 'MEMBERS' ? 'bg-[#04681F] text-white shadow-md' : 'text-gray-400 hover:text-white'
             }`}
           >
-            Join Requests ({members.length})
+            Members ({members.length})
           </button>
           {adminRole === 'MASTER_ADMIN' && (
             <button
@@ -486,36 +552,73 @@ export default function AdminDashboard() {
           </button>
         </div>
 
-        {/* JOIN REQUESTS TAB */}
-        {activeTab === 'MEMBERS' && (
-          <div className="bg-[#04240c] border border-[#0a4017] rounded-xl p-6 shadow-xl">
-            <h2 className="text-lg font-bold uppercase tracking-wide mb-6 text-white flex items-center">
-              <span className="w-2 h-5 bg-[#04681F] mr-3 rounded-full"></span>
-              Join Requests
-            </h2>
+        {/* MEMBERS TAB */}
+        {activeTab === 'MEMBERS' && (() => {
+          const filteredMembers = members.filter(m => {
+            const query = memberSearch.toLowerCase();
+            return (
+              (m.name && m.name.toLowerCase().includes(query)) ||
+              (m.email && m.email.toLowerCase().includes(query)) ||
+              (m.phone && m.phone.toLowerCase().includes(query)) ||
+              (m.state && m.state.toLowerCase().includes(query)) ||
+              (m.lga && m.lga.toLowerCase().includes(query))
+            );
+          });
 
-            {members.length === 0 ? (
-              <div className="text-center py-12 text-gray-500 font-medium">
-                No join requests received yet.
+          return (
+            <div className="bg-[#04240c] border border-[#0a4017] rounded-xl p-6 shadow-xl">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+                <h2 className="text-lg font-bold uppercase tracking-wide text-white flex items-center">
+                  <span className="w-2 h-5 bg-[#04681F] mr-3 rounded-full"></span>
+                  Members
+                </h2>
+                <div className="w-full md:w-auto flex flex-col md:flex-row items-start md:items-center gap-4">
+                  <span className="text-[#AE955A] text-xs font-bold uppercase tracking-widest whitespace-nowrap">
+                    Showing: {filteredMembers.length}
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="Search by name, LGA, state..."
+                    value={memberSearch}
+                    onChange={(e) => setMemberSearch(e.target.value)}
+                    className="w-full md:w-72 bg-[#021807] border border-[#0a4017] px-4 py-2.5 text-white text-sm outline-none rounded-lg focus:border-[#AE955A] transition-all"
+                  />
+                  <button
+                    onClick={() => handleExportCSV(filteredMembers)}
+                    className="bg-[#04681F] hover:bg-[#058227] text-white font-bold py-2.5 px-4 uppercase text-xs tracking-wider rounded-lg transition-all whitespace-nowrap"
+                  >
+                    Export CSV
+                  </button>
+                </div>
               </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-gray-300">
-                  <thead className="bg-[#021807] text-xs uppercase text-gray-400">
-                    <tr>
-                      <th className="px-4 py-3 rounded-tl-lg">Name</th>
-                      <th className="px-4 py-3">Contact Details</th>
-                      <th className="px-4 py-3">Joined Date</th>
-                      <th className="px-4 py-3 text-center rounded-tr-lg">Contacted?</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {members.map((member) => (
+
+              {filteredMembers.length === 0 ? (
+                <div className="text-center py-12 text-gray-500 font-medium">
+                  {memberSearch ? 'No members match your search.' : 'No members found.'}
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm text-gray-300">
+                    <thead className="bg-[#021807] text-xs uppercase text-gray-400">
+                      <tr>
+                        <th className="px-4 py-3 rounded-tl-lg">Name</th>
+                        <th className="px-4 py-3">Contact Details</th>
+                        <th className="px-4 py-3">Location</th>
+                        <th className="px-4 py-3">Joined Date</th>
+                        <th className="px-4 py-3 text-center rounded-tr-lg">Contacted?</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredMembers.map((member) => (
                       <tr key={member.id} className="border-b border-[#0a4017] hover:bg-[#021807]/50 transition-colors">
                         <td className="px-4 py-4 font-bold text-white">{member.name}</td>
                         <td className="px-4 py-4">
                           <p className="text-[#AE955A] font-mono">{member.phone}</p>
                           <p className="text-xs text-gray-500">{member.email}</p>
+                        </td>
+                        <td className="px-4 py-4">
+                          <p className="text-white text-xs">{member.lga || 'N/A'}</p>
+                          <p className="text-[10px] text-gray-500 uppercase">{member.state || 'N/A'}</p>
                         </td>
                         <td className="px-4 py-4 text-xs font-mono text-gray-400">
                           {new Date(member.createdAt).toLocaleDateString()}
@@ -534,16 +637,32 @@ export default function AdminDashboard() {
                         </td>
                       </tr>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        )}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          );
+        })()}
 
         {/* TEAM ACCOUNTS TAB */}
         {activeTab === 'USERS' && adminRole === 'MASTER_ADMIN' && (
           <div className="space-y-8">
+            
+            {/* SYSTEM BACKUP PANEL */}
+            <div className="bg-[#021807] border border-[#AE955A] rounded-xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-center gap-4">
+              <div>
+                <h2 className="text-lg font-bold uppercase tracking-wide text-white mb-1">System Backup</h2>
+                <p className="text-xs text-gray-400">Download a complete, encrypted JSON snapshot of all members, articles, and admin accounts.</p>
+              </div>
+              <button
+                onClick={handleDownloadBackup}
+                className="bg-[#AE955A] hover:bg-[#8e7845] text-[#021807] font-extrabold py-3 px-6 uppercase text-xs tracking-wider rounded-lg transition-all shadow-lg whitespace-nowrap"
+              >
+                ↓ Download Full Backup
+              </button>
+            </div>
+
             {/* CREATE USER FORM */}
             <div className="bg-[#04240c] border border-[#0a4017] rounded-xl p-6 shadow-xl max-w-2xl">
               <h2 className="text-lg font-bold uppercase tracking-wide mb-4 text-white flex items-center">

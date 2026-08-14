@@ -7,9 +7,25 @@ export default function JoinPage() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Form State
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', state: '', lga: '' });
   const [status, setStatus] = useState<'IDLE' | 'LOADING' | 'SUCCESS' | 'ERROR'>('IDLE');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const NIGERIAN_STATES = [
+    "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", 
+    "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT - Abuja", "Gombe", 
+    "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", 
+    "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", 
+    "Taraba", "Yobe", "Zamfara"
+  ];
+
+  // We provide a datalist for Kaduna and FCT. If a state isn't here, they can just type their LGA.
+  const STATE_LGA_MAP: Record<string, string[]> = {
+    "Kaduna": ["Birnin Gwari", "Chikun", "Giwa", "Igabi", "Ikara", "Jaba", "Jema'a", "Kachia", "Kaduna North", "Kaduna South", "Kagarko", "Kajuru", "Kaura", "Kauru", "Kubau", "Kudan", "Lere", "Makarfi", "Sabon Gari", "Sanga", "Soba", "Zangon Kataf", "Zaria"],
+    "FCT - Abuja": ["Abaji", "Bwari", "Gwagwalada", "Kuje", "Kwali", "Abuja Municipal"]
+  };
+
+  const availableLgas = STATE_LGA_MAP[formData.state] || [];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +44,7 @@ export default function JoinPage() {
       
       if (data.success) {
         setStatus('SUCCESS');
-        setFormData({ name: '', email: '', phone: '' }); // Clear the form
+        setFormData({ name: '', email: '', phone: '', state: '', lga: '' }); // Clear the form
       } else {
         setStatus('ERROR');
         setErrorMessage(data.error || 'Something went wrong. Please try again.');
@@ -181,6 +197,50 @@ export default function JoinPage() {
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full bg-gray-50 border border-gray-300 px-4 py-3 text-gray-900 font-mono focus:border-[#04681F] focus:ring-1 focus:ring-[#04681F] outline-none rounded-lg text-sm transition-all"
                 />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-bold uppercase text-gray-700 mb-2 tracking-widest">
+                    State
+                  </label>
+                  <input
+                    type="text"
+                    list="states-list"
+                    required
+                    placeholder="Type or select state"
+                    value={formData.state}
+                    onChange={(e) => setFormData({ ...formData, state: e.target.value, lga: '' })}
+                    className="w-full bg-gray-50 border border-gray-300 px-4 py-3 text-gray-900 focus:border-[#04681F] focus:ring-1 focus:ring-[#04681F] outline-none rounded-lg text-sm transition-all cursor-pointer"
+                  />
+                  <datalist id="states-list">
+                    {NIGERIAN_STATES.map((state) => (
+                      <option key={state} value={state} />
+                    ))}
+                  </datalist>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase text-gray-700 mb-2 tracking-widest">
+                    L.G.A
+                  </label>
+                  <input
+                    type="text"
+                    list="lgas-list"
+                    required
+                    placeholder={availableLgas.length > 0 ? "Type or select LGA" : "Type your LGA"}
+                    value={formData.lga}
+                    onChange={(e) => setFormData({ ...formData, lga: e.target.value })}
+                    className="w-full bg-gray-50 border border-gray-300 px-4 py-3 text-gray-900 focus:border-[#04681F] focus:ring-1 focus:ring-[#04681F] outline-none rounded-lg text-sm transition-all cursor-pointer"
+                  />
+                  {availableLgas.length > 0 && (
+                    <datalist id="lgas-list">
+                      {availableLgas.map((lga) => (
+                        <option key={lga} value={lga} />
+                      ))}
+                    </datalist>
+                  )}
+                </div>
               </div>
 
               <button

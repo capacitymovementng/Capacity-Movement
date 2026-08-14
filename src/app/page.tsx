@@ -292,7 +292,7 @@ export default function PublicHomePage() {
                 img: '/images/prog-ned.jpg'
               },
               { 
-                title: 'Capacity in Governance (CGI)', 
+                title: 'Capacity in Governance (CIG)', 
                 desc: 'Tracking governance performance, promoting public integrity.',
                 img: '/images/prog-cgi.jpg'
               },
