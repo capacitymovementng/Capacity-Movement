@@ -603,7 +603,7 @@ export default function AdminDashboard() {
                       <tr>
                         <th className="px-4 py-3 rounded-tl-lg">Name</th>
                         <th className="px-4 py-3">Contact Details</th>
-                        <th className="px-4 py-3">Location</th>
+                        <th className="px-4 py-3">LGA / State</th>
                         <th className="px-4 py-3">Joined Date</th>
                         <th className="px-4 py-3 text-center rounded-tr-lg">Contacted?</th>
                       </tr>
