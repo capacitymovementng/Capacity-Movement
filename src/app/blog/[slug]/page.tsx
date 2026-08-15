@@ -155,18 +155,19 @@ export default function SinglePostPage() {
                 {/* Primary Native Share Button (Opens phone's app chooser) */}
                 <button 
                   onClick={async () => {
+                    const shareUrl = `${window.location.href.split('?')[0]}?v=${Date.now()}`;
                     if (navigator.share) {
                       try {
                         await navigator.share({
                           title: post.title,
                           text: `${post.title} - Read more on Capacity Movement:`,
-                          url: window.location.href,
+                          url: shareUrl,
                         });
                       } catch (err) {
                         // User cancelled or share failed silently
                       }
                     } else {
-                      navigator.clipboard.writeText(window.location.href);
+                      navigator.clipboard.writeText(shareUrl);
                       alert('Link copied to clipboard!');
                     }
                   }}

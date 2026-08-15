@@ -9,16 +9,17 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Capacity Movement, Project 2027",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://capacitymovement.org"),
+  title: "Capacity Movement | Project 2027",
   description: "Building a Capable Nation, One Citizen at a Time. Join the movement for credible leadership in Nigeria.",
   openGraph: {
     title: "Capacity Movement | Project 2027",
     description: "Building a Capable Nation, One Citizen at a Time. Join the movement for credible leadership.",
-    url: "https://capacitymovement.ng", // Replace with your actual domain when you launch
+    url: "/", 
     siteName: "Capacity Movement",
     images: [
       {
-        url: "/images/hero-banner.jpg", // This will show up on WhatsApp/Facebook
+        url: "https://capacitymovement.org/images/hero-banner.jpg",
         width: 1200,
         height: 630,
         alt: "Capacity Movement - Project 2027",
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Capacity Movement | Project 2027",
     description: "Building a Capable Nation, One Citizen at a Time.",
-    images: ["/images/hero-banner.jpg"],
+    images: ["https://capacitymovement.org/images/hero-banner.jpg"],
   },
 };
 

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         openGraph: {
           title: post.title,
           description: shortDescription,
-          url: `https://capacitymovement.ng/blog/${slug}`, // Update domain when live
+          url: `https://capacitymovement.org/blog/${slug}`, // Update domain when live
           siteName: "Capacity Movement",
           images: [
             {
