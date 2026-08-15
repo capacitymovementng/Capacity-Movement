@@ -171,10 +171,10 @@ export default function PublicHomePage() {
               We reject political imposition and every attempt to silence the voice of the people. Leadership must emerge through the free will, participation, and confidence of the people—not through imposition.
             </p>
             <p>
-              In May 2026, the Capacity Movement made its position unmistakably clear by calling for direct, transparent, credible, and democratic primaries. Our voice was heard beyond Kaduna, reflecting a growing demand for a political system where the people—not a few individuals—decide their leaders.
+              In May 2026, the Capacity Movement made its position unmistakably clear by calling for direct, transparent, credible, and democratic primaries. Our voice was heard beyond Kaduna, reflecting a growing demand for a political system where the people, not a few individuals, decide their leaders.
             </p>
             <p>
-              Our movement draws strength and direction from our Chairman, Board of Trustees (CMP), <strong className="text-[#04681F]">Ambassador Yerima Usman Shettima</strong>, President of the Arewa Consultative Youth Movement (ACYM)—a leader whose commitment to youth participation, democratic values, and people-centred leadership continues to inspire us.
+              Our movement draws strength and direction from our Chairman, Board of Trustees (CMP), <strong className="text-[#04681F]">Ambassador Yerima Usman Shettima</strong>, President of the Arewa Consultative Youth Movement (ACYM),a leader whose commitment to youth participation, democratic values, and people-centred leadership continues to inspire us.
             </p>
           </div>
 
