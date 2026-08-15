@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
           siteName: "Capacity Movement",
           images: [
             {
-              url: post.featuredImage || "/images/hero-banner.jpg",
+              url: post.featuredImage || "https://capacitymovement.org/images/logo.png",
               width: 1200,
               height: 630,
               alt: post.title,
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
           card: "summary_large_image",
           title: post.title,
           description: shortDescription,
-          images: [post.featuredImage || "/images/hero-banner.jpg"],
+          images: [post.featuredImage || "https://capacitymovement.org/images/logo.png"],
         },
       };
     }

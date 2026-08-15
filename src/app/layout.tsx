@@ -19,10 +19,10 @@ export const metadata: Metadata = {
     siteName: "Capacity Movement",
     images: [
       {
-        url: "https://capacitymovement.org/images/hero-banner.jpg",
+        url: "https://capacitymovement.org/images/logo.png",
         width: 1200,
-        height: 630,
-        alt: "Capacity Movement - Project 2027",
+        height: 1200,
+        alt: "Capacity Movement - Official Emblem",
       },
     ],
     locale: "en_NG",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Capacity Movement | Project 2027",
     description: "Building a Capable Nation, One Citizen at a Time.",
-    images: ["https://capacitymovement.org/images/hero-banner.jpg"],
+    images: ["https://capacitymovement.org/images/logo.png"],
   },
 };
 
