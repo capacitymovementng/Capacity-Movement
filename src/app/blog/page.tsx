@@ -32,7 +32,7 @@ export default function BlogPage() {
       <nav className="bg-[#04681F] text-white py-4 px-6 md:px-12 flex justify-between items-center shadow-lg sticky top-0 z-50">
         <Link href="/" className="flex items-center gap-3">
           <img 
-            src="/logo.png" 
+            src="/images/logo.png" 
             alt="Capacity Movement Logo" 
             className="w-10 h-10 md:w-12 md:h-12 object-contain bg-[#04681F] rounded-full border-2 border-[#AE955A] p-1 shadow-md"
           />
