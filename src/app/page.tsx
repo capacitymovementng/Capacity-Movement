@@ -168,7 +168,7 @@ export default function PublicHomePage() {
               Under the bold and principled leadership of our national President, <strong className="text-[#04681F]">Hon. Shehu Sani Sado</strong>, the Capacity Movement (CMP) stands firmly and unapologetically for people-driven democracy, internal party democracy, transparency, and fairness.
             </p>
             <p>
-              We reject political imposition and every attempt to silence the voice of the people. Leadership must emerge through the free will, participation, and confidence of the people—not through imposition.
+              We reject political imposition and every attempt to silence the voice of the people. Leadership must emerge through the free will, participation, and confidence of the people, not through imposition.
             </p>
             <p>
               In May 2026, the Capacity Movement made its position unmistakably clear by calling for direct, transparent, credible, and democratic primaries. Our voice was heard beyond Kaduna, reflecting a growing demand for a political system where the people, not a few individuals, decide their leaders.
