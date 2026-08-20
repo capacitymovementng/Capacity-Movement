@@ -255,7 +255,7 @@ export default function PublicHomePage() {
           {[
             { l: 'C', title: 'Credibility', desc: 'Leadership must be built on truth, trust, and transparency.' },
             { l: 'A', title: 'Accountability', desc: 'Every leader must answer to the people.' },
-            { l: 'P', title: 'Protection', desc: 'We stand for the safety and rights of every Nigerian.' },
+            { l: 'P', title: 'Projection', desc: 'Leadership must have a clear vision of the future and delibrately translate that vision into the future we want to build.' },
             { l: 'A', title: 'Ability', desc: 'Building skills to turn citizen potential into performance.' },
             { l: 'C', title: 'Creativity', desc: 'Encouraging problem-solving and new ideas.' },
             { l: 'I', title: 'Integrity', desc: 'Our moral compass. We lead by example.' },
