@@ -52,7 +52,7 @@ export default function PublicHomePage() {
   }, [latestNews.length]);
 
   return (
-    <main className="min-h-screen bg-white text-gray-900 font-sans selection:bg-[#AE955A] selection:text-white overflow-x-hidden">
+    <main className="min-h-screen max-w-[100vw] bg-white text-gray-900 font-sans selection:bg-[#AE955A] selection:text-white overflow-x-hidden">
       {/* NAVIGATION BAR */}
       <nav className="bg-[#04681F] text-white py-4 px-6 md:px-12 flex justify-between items-center shadow-lg sticky top-0 z-50">
         <div className="flex items-center gap-3">
@@ -120,11 +120,11 @@ export default function PublicHomePage() {
                   onError={(e) => e.currentTarget.src = '/images/logo.png'} 
                 />
               </div>
-              <div className="flex flex-col overflow-hidden flex-1 min-w-0">
-                <span className="text-[8px] md:text-[10px] text-[#AE955A] font-bold uppercase tracking-widest leading-none mb-0.5 md:mb-1">
+              <div className="flex flex-col overflow-hidden flex-1 min-w-0 w-full">
+                <span className="block w-full truncate text-[8px] md:text-[10px] text-[#AE955A] font-bold uppercase tracking-widest leading-none mb-0.5 md:mb-1">
                   {latestNews[currentNewsIndex].category?.name || 'Latest Update'}
                 </span>
-                <span className="text-[11px] md:text-sm text-gray-200 font-medium truncate group-hover:text-white transition-colors">
+                <span className="block w-full truncate text-[11px] md:text-sm text-gray-200 font-medium group-hover:text-white transition-colors">
                   {latestNews[currentNewsIndex].title}
                 </span>
               </div>
