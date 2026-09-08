@@ -108,30 +108,32 @@ export default function PublicHomePage() {
           
           {/* Subtle News Ticker */}
           {latestNews.length > 0 && (
-            <Link 
-              href={latestNews[currentNewsIndex].slug === '/blog' ? '/blog' : `/blog`} 
-              className="flex items-center gap-2 md:gap-3 bg-black/40 hover:bg-black/60 border border-[#AE955A]/50 rounded-full p-1 pr-3 md:p-1.5 md:pr-4 mb-6 md:mb-8 transition-all backdrop-blur-sm w-[95%] max-w-xl mx-auto text-left group shadow-lg overflow-hidden"
-            >
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden shrink-0 border border-[#04681F]">
-                <img 
-                  src={latestNews[currentNewsIndex].featuredImage || '/images/logo.png'} 
-                  alt="News Snippet" 
-                  className="w-full h-full object-cover" 
-                  onError={(e) => e.currentTarget.src = '/images/logo.png'} 
-                />
-              </div>
-              <div className="flex flex-col flex-1 min-w-0 overflow-hidden pr-2">
-                <span className="block w-full truncate text-[8px] md:text-[10px] text-[#AE955A] font-bold uppercase tracking-widest leading-none mb-0.5 md:mb-1">
-                  {latestNews[currentNewsIndex].category?.name || 'Latest Update'}
-                </span>
-                <span className="block w-full truncate text-[10px] md:text-sm text-gray-200 font-medium group-hover:text-white transition-colors">
-                  {latestNews[currentNewsIndex].title}
-                </span>
-              </div>
-              <div className="shrink-0 text-[#AE955A] group-hover:translate-x-1 transition-transform">
-                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-              </div>
-            </Link>
+            <div className="w-full max-w-[90vw] md:max-w-xl mx-auto mb-6 md:mb-8">
+              <Link 
+                href={latestNews[currentNewsIndex].slug === '/blog' ? '/blog' : `/blog`} 
+                className="flex w-full items-center gap-3 bg-black/40 hover:bg-black/60 border border-[#AE955A]/50 rounded-full p-1.5 pr-4 transition-all backdrop-blur-sm text-left group shadow-lg overflow-hidden"
+              >
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden shrink-0 border border-[#04681F]">
+                  <img 
+                    src={latestNews[currentNewsIndex].featuredImage || '/images/logo.png'} 
+                    alt="News Snippet" 
+                    className="w-full h-full object-cover" 
+                    onError={(e) => e.currentTarget.src = '/images/logo.png'} 
+                  />
+                </div>
+                <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+                  <span className="block w-full truncate text-[8px] md:text-[10px] text-[#AE955A] font-bold uppercase tracking-widest leading-none mb-0.5 md:mb-1">
+                    {latestNews[currentNewsIndex].category?.name || 'Latest Update'}
+                  </span>
+                  <span className="block w-full truncate text-[11px] md:text-sm text-gray-200 font-medium group-hover:text-white transition-colors">
+                    {latestNews[currentNewsIndex].title}
+                  </span>
+                </div>
+                <div className="shrink-0 text-[#AE955A] ml-1 group-hover:translate-x-1 transition-transform">
+                  <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                </div>
+              </Link>
+            </div>
           )}
 
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold uppercase tracking-tight mb-4 md:mb-6 leading-tight text-shadow-lg">

@@ -136,8 +136,8 @@ export default function BlogPage() {
                       {new Date(post.createdAt).toLocaleDateString()}
                     </span>
                   </div>
-                  <h3 className="font-bold text-[#021807] text-lg leading-tight mb-3">{post.title}</h3>
-                  <div className="text-sm text-gray-600 mb-6 line-clamp-3 overflow-hidden">
+                  <h3 className="font-bold text-[#021807] text-lg leading-tight mb-3 break-words hyphens-auto">{post.title}</h3>
+                  <div className="text-sm text-gray-600 mb-6 line-clamp-3 overflow-hidden break-words hyphens-auto">
                     {post.content}
                   </div>
                   <div className="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
